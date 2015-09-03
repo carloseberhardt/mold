@@ -1,0 +1,23 @@
+{
+  "name": "mold",
+  "version": "0.0.1",
+  "description": "templating proxy",
+  "main": "index.js",
+  "scripts": {
+    "test": "standard"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/carloseberhardt/mold.git"
+  },
+  "author": "@carloseberhardt,",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/carloseberhardt/mold/issues"
+  },
+  "homepage": "https://github.com/carloseberhardt/mold#readme",
+  "dependencies": {
+    "handlebars": "^4.0.0",
+    "request": "^2.61.0"
+  }
+}
