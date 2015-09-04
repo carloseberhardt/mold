@@ -1,7 +1,8 @@
 var http = require('http')
 var request = require('request')
-var config = require('./config')
-var handlebars = require('handlebars')
+var options = require('./config')
+var handlebars = options.handlebars
+var config = options.config
 
 var srv = http.createServer(function (req, res) {
   var accept = req.headers.accept.split(',')

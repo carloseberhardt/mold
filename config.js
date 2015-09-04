@@ -1,9 +1,8 @@
+var handlebars = require('handlebars')
 var config = {}
-// since this is js, we could use apigee-access here if we had a need
-// and keep index.js very generic
-// but static config is fine for a start
+var fs = require('fs')
 
-// config.target
+// config.target is the request from which to retrieve the json
 config.target = {
   options: {
     method: 'GET',
@@ -14,9 +13,20 @@ config.target = {
   }
 }
 
+// config.contentTypes contains our templates
+var htmlTemplate = fs.readFileSync('./surepark_template.html', {encoding: 'utf-8'})
+
 config.contentTypes = {
-  'text/html': '<html><head></head><body><ul>{{#parkinginfo.item}}<li>{{countAreaName}} is {{percentFull}}% full</li>{{/parkinginfo.item}}</ul></body></html>',
-  'application/json': '{{#each parkinginfo.item}}{{@key}}:{{this.capacity}}{{/each}}'
+  'text/html': htmlTemplate,
+  'application/json': '{ "lots": [ {{#each parkinginfo.item}} { "terminal": "{{lot}}", "lot": "{{countAreaName}}", "percentFull": {{percentFull}} } {{#unless @last}},{{/unless}}  {{/each}} ]}'
 }
 
-module.exports = config
+handlebars.registerHelper('ifvalue', function (conditional, options) {
+  if (options.hash.value === conditional) {
+    return options.fn(this)
+  } else {
+    return options.inverse(this)
+  }
+})
+
+module.exports = {config: config, handlebars: handlebars}
